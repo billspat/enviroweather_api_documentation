@@ -91,5 +91,38 @@ To make a Jupyter version of any marimo notebook file `notebookfile` in the `/ju
 
 6. Build the website
 
+This is far from perfect, but a start.  
 
+There is a script to export static html to the 'site' folder in scripts, `scripts/export_html.sh`
+In its current form it requires uv to be installed (that may change) so you don't have to active the
+environment first (uv will find it)
+
+The script requires a file that lists the marimo python file names to convert. That's because
+there are other non-marimo python files in the main folder found with just `*.py`
+
+Currently the file is call "doclist.txt" and is in this repository.  When you add a new marimo file you
+need to add it to this file if you want to include it int he site. 
+
+The output html/webfiles go into the folder `site`
+
+From the terminal, in the top folder of this project, simply run `scripts/export_html.sh`
+
+The output of the python code will be shown as symptom of running the python to create the html version, but can be ignored
+
+An example command run by this script is :
+
+```bash
+uv run marimo export html \
+  ewx_api_v1_step4a_complex_result_model_parameters.py \
+  --no-sandbox -o site/ewx_api_v1_step4a_complex_result_model_parameters.html -f
+```
+
+The script is simple and will error if somethings are not in place (like the doclist)
+
+To view the files on your laptop, run a simple python web server with 
+
+`python -m http.server --directory site -b 127.0.0.1 8080`
+
+and open http://127.0.0.1 8080 which will list the files.  There is currently no 'index' or table of contents
+file or navigation (that's on the to-do list)
 
