@@ -367,6 +367,24 @@ def _(station_list_response_data):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    ### Station Properties (columns):
+
+    | Property | Description |
+    |: --- |: --- |
+    | **value** | used by website, use 'key' instead |
+    | **key** | station code/id, currently 3-letters |
+    | **display** | full station name, as displayed on website |
+    | **startDate** | date of the first observation for this station |
+    | **endDate** | last date an observation was reported. |
+    | **longitude** | Decimal Longitude (WGS84) |
+    | **latitude** | Decimal Latitude (WGS84) |
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     For use in Python, let's convert the dictionary (array, hash) of stations into a Pandas data frame.
     """)
     return
