@@ -83,9 +83,13 @@ Note we already have a test suite for the PHP api servers, these tests are mostl
 While we get used to Marimo, and until we get feedback on the best format, we are maintaing jupyter versions since jupyter is so widely used and works directly in VS code. 
 All the Jupyter notebook files are in the 'juypter' folder to make it easy to find. 
 
-To make a Jupyter version of any marimo notebook file `notebookfile` in the `/jupyter` folder, run the following command: 
+To make a Jupyter version of any marimo notebook file `notebookfile` in the `/jupyter` folder, run the following command (in zsh): 
 
-`uv run marimo export ipynb <file>.py --sort top-down -o jupyter/<file>.ipynb -f`
+```zsh
+marimofile=ewx_api_v1_quickstart.py
+export filestem=${marimofile%.*}
+uv run marimo export ipynb ${filestem}.py --sort top-down -o jupyter/${filestem}.ipynb -f
+```
 
 *TODO/TBD: write a script to convert all marimo files at once*
 
