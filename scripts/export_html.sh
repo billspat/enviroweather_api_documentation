@@ -17,6 +17,11 @@
 
 export sitefolder="site"
 export marimo_file_list_file="doclist.txt"
+
+# this is read by the sit TOC method in site_helpers.py, if this is set as 
+# HTML, that method will output HTML links, else it will output links for use in notebooks
+export marimo_file_type="HTML"
+
 # todo check if the file above exists
 # todo allow these to be parameters
 

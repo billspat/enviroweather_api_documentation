@@ -29,8 +29,19 @@ There are two forms of these notebooks:
 
 ### Easy
 
-Go to our documentation website
+Go to our documentation website : (TBD)
 
+### Programing/interactive
+
+1. Clone/copy this repository to your computer
+2. install `uv` if you don't have it.  You can use pip if you don't
+3. install dependencies for this project 
+   - create a new python environment
+   - *with uv* `uv sync`
+   - *with pip* `pip install .`
+4. to open a notebook in the marimo interface run \
+   - *with uv* `uv run marimo edit`
+   - *with pip* (activate environment), then `marimo edit`
 
 ## Developing/Contributing to this documentation
 
@@ -116,12 +127,14 @@ The output of the python code will be shown as symptom of running the python to 
 An example command run by this script is :
 
 ```bash
+export marimo_file_type="HTML"
+
 uv run marimo export html \
   ewx_api_v1_step4a_complex_result_model_parameters.py \
   --no-sandbox -o site/ewx_api_v1_step4a_complex_result_model_parameters.html -f
 ```
 
-The script is simple and will error if somethings are not in place (like the doclist)
+The script is simple and will error if some things are not in place (like the doclist)
 
 To view the files on your laptop, run a simple python web server with 
 

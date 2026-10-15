@@ -19,7 +19,7 @@ def _():
     # this is a Marimo document, not a jupyter notebook.  Import marimo to use it
     import marimo as mo
     import site_helpers as site
-    toc_md = site.toc_md_links(scriptname = __name__)
+    toc_md = site.toc_md_links()
     mo.sidebar(mo.md("""## Pages""" + toc_md))
     return (mo,)
 
