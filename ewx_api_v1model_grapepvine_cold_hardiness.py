@@ -112,6 +112,20 @@ def _(date):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    ## Important: set long timeout
+
+    This model takes a long time to run. As described about, the Enviroweather API is actually calling an external API from NEWA to run the model, and the speed of that is outside of our control. In our experience, it can easily go longer than the default "timeout" setting.  When calling this request from your own program, set a timeout.
+
+    In Python, you set the timeout in the request 'get' method, for example: `requests.get(url, timeout = 120)`
+
+    The code block below sets this to 2 minutes.  Adjust this if you need it to be longer.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     ## Grapevine Cold Hardiness model:defaults
 
     When called with no varieties selected, RM-API has a default selection it will use.  Let's try that, but again it won't run if it's not between October 1 and May 1.
@@ -138,12 +152,13 @@ def _(
 ):
     # assemble the model URL and send request
 
+    extended_timeout_seconds = 120  # set timeout for 2 minutes
     model_code = "grapevinecoldhardiness"
     grapevine_url = (
         f"{rm_api_url}/db2/run?stationCode={station_code}&stationType=1&selectDate={select_date}&resultModelCode={model_code}"
     )
     print(grapevine_url)
-    grapevine_response = requests.get(grapevine_url, headers=token_header, timeout=30)
+    grapevine_response = requests.get(grapevine_url, headers=token_header, timeout=extended_timeout_seconds)
     print(grapevine_response)
     grapevine_data = grapevine_response.json()
     if grapevine_data["error"]:
