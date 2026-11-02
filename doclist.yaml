@@ -8,4 +8,5 @@
 "step 4a. complex_result_model_parameters": ewx_api_v1_step4a_complex_result_model_parameters
 "step 5. result models": ewx_api_v1_step5_result_models
 "step 5a. complex result models": ewx_api_v1_step5a_complex_result_models
+"Model: Grapevine Cold Hardiness ": ewx_api_v1model_grapepvine_cold_hardiness
 "common errors": ewx_api_v1_resource_common_errors
