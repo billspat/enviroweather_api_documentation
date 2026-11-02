@@ -9,7 +9,7 @@
 
 import marimo
 
-__generated_with = "0.25.0"
+__generated_with = "0.24.2"
 app = marimo.App(width="medium")
 
 
@@ -154,7 +154,7 @@ def _(env_key_selector, ewx_env_dict: dict[str, str]):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(rf"""
- 
+
     """)
     return
 
@@ -372,9 +372,9 @@ def _(mo):
     mo.md(r"""
     ### Station Properties (columns):
 
-    | Property | Description |
-    |: --- |: --- |
-    | **value** | used by website, use 'key' instead |
+    | Property  | Description |
+    |:---|:---|
+    | **value** | ignore, used by website (use key value instead) |
     | **key** | station code/id, currently 3-letters |
     | **display** | full station name, as displayed on website |
     | **startDate** | date of the first observation for this station |
