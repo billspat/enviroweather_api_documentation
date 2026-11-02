@@ -8,7 +8,7 @@
 
 import marimo
 
-__generated_with = "0.25.0"
+__generated_with = "0.24.2"
 app = marimo.App(width="medium")
 
 
@@ -112,6 +112,20 @@ def _(date):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    ## Important: set long timeout
+
+    This model takes a long time to run. As described about, the Enviroweather API is actually calling an external API from NEWA to run the model, and the speed of that is outside of our control. In our experience, it can easily go longer than the default "timeout" setting.  When calling this request from your own program, set a timeout.
+
+    In Python, you set the timeout in the request 'get' method, for example: `requests.get(url, timeout = 120)`
+
+    The code block below sets this to 2 minutes.  Adjust this if you need it to be longer.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     ## Grapevine Cold Hardiness model:defaults
 
     When called with no varieties selected, RM-API has a default selection it will use.  Let's try that, but again it won't run if it's not between October 1 and May 1.
@@ -138,18 +152,64 @@ def _(
 ):
     # assemble the model URL and send request
 
+    extended_timeout_seconds = 120  # set timeout for 2 minutes
     model_code = "grapevinecoldhardiness"
     grapevine_url = (
         f"{rm_api_url}/db2/run?stationCode={station_code}&stationType=1&selectDate={select_date}&resultModelCode={model_code}"
     )
     print(grapevine_url)
-    grapevine_response = requests.get(grapevine_url, headers=token_header, timeout=30)
+    grapevine_response = requests.get(grapevine_url, headers=token_header, timeout=extended_timeout_seconds)
     print(grapevine_response)
-    grapevine_data = grapevine_response.json()
-    if grapevine_data["error"]:
+    gvct_model_response = grapevine_response.json()
+    if gvct_model_response["error"]:
         print("error in response:", graoevine_data["message"])
-    grapevine_data
+    else:
+        print("model rean successfully")
+
+    return (
+        extended_timeout_seconds,
+        grapevine_response,
+        gvct_model_response,
+        model_code,
+    )
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### GVCT Model Response
+
+    Show raw JSON output:
+    """)
     return
+
+
+@app.cell
+def _(gvct_model_response):
+    gvct_model_response
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### GVCT Model Output Table,exactly as Returned
+
+    The table structure is designed to show time vertically, and each requested variety shown as columns.
+
+    Like many response tables in Enviroweather, this has columns with values informing the website how to render it.  The risk category is shown in columns labelled `"risk_<variety>"` for example `risk_Cabernet_Franc` and there are additional columns with suffix `_highlight` that are CSS class names with no spaces.  For use outside of Enviroweather these can be safely ignored.
+    """)
+    return
+
+
+@app.cell
+def _(gvct_model_response):
+    # show output as table 
+    import pandas as pd
+    gvct_data = gvct_model_response["data"]["Table"]
+    gvct_df = pd.DataFrame(gvct_data)
+    gvct_df
+    return (pd,)
 
 
 @app.cell(hide_code=True)
@@ -169,7 +229,54 @@ def _(mo):
 
 
 @app.cell
-def _():
+def _(
+    extended_timeout_seconds,
+    graoevine_data,
+    grapevine_response,
+    model_code,
+    requests,
+    rm_api_url,
+    select_date,
+    station_code,
+    token_header,
+):
+    # using extended_timeout_seconds = 120  and model_code set in cell above
+
+    # construct param string
+    variety_list = ["Cabernet_Franc","Chardonnay","Frontenac","Marquette","Riesling"]
+    gvct_variety_params  = "&".join([ f"cultivars[]={v}" for v in variety_list])
+
+    # insert into URL
+    multi_variety_grapevine_url = (
+        f"{rm_api_url}/db2/run?stationCode={station_code}&{gvct_variety_params}&stationType=1&selectDate={select_date}&resultModelCode={model_code}"
+    )
+    # confirm/show
+    print(multi_variety_grapevine_url)
+    # try it! 
+    multi_variety_grapevine_response = requests.get(multi_variety_grapevine_url, headers=token_header, timeout=extended_timeout_seconds)
+    # print response code - for enviroweather, 200 does not mean the model ran, just means the response went through
+    print(grapevine_response)
+
+    mv_gvct_model_response = grapevine_response.json()
+    if mv_gvct_model_response["error"]:
+        print("error in response:", graoevine_data["message"])
+    else:
+        print("model rean successfully")
+
+    return (mv_gvct_model_response,)
+
+
+@app.cell
+def _(mv_gvct_model_response):
+    mv_gvct_model_response["data"]
+    return
+
+
+@app.cell
+def _(gvct_model_response, pd):
+    mv_gvct_df = pd.DataFrame(gvct_model_response["data"]["Table"])
+    mv_gvct_df
+
     return
 
 
