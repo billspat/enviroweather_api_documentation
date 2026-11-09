@@ -25,7 +25,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## **DEPRECATION WARNING**
+    **<span style="color:Red;">DEPRECATION WARNING</span>**
 
     *Enviroweather authentication and token issuance method is changing this year. Use the following documentation to work with our APIs currenlty but contact us if you'd like notification of when our token system is updated.*
     """)
