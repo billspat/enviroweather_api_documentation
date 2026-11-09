@@ -8,7 +8,7 @@
 
 import marimo
 
-__generated_with = "0.25.0"
+__generated_with = "0.24.2"
 app = marimo.App(width="medium", app_title="Step 1. Tokens")
 
 
@@ -20,6 +20,16 @@ def _():
     toc_md = site.toc_md_links()
     mo.sidebar(mo.md("""## Pages""" + toc_md))
     return (mo,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## **DEPRECATION WARNING**
+
+    *Enviroweather authentication and token issuance method is changing this year. Use the following documentation to work with our APIs currenlty but contact us if you'd like notification of when our token system is updated.*
+    """)
+    return
 
 
 @app.cell(hide_code=True)

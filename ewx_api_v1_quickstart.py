@@ -184,6 +184,11 @@ def _(mo):
     mo.md(r"""
     ## Step 1.  Get Site Token
 
+    **<span style="color:Red;">DEPRECATION WARNING</span>**
+
+    *Enviroweather authentication and token issuance method is changing this year. Use the following documentation to work with our APIs currenlty but contact us if you'd like notification of when our token system is updated.*
+
+    ---
     This is our preliminary system for metering and access control.  To use either api or rm-api, you must use a site-token.  These can be re-used but to get an initial token, use the public URL  and save the token for later use.  In the future everyone must log-in and create a personalized site-token.
     """)
     return
