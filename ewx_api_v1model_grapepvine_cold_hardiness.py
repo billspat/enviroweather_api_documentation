@@ -61,7 +61,17 @@ def _(mo):
     mo.md(r"""
     ## Setup: set environment and get a token
 
-    We manually set the environment (to production by default) and use helpder functions to get a token. See ewx_api_v1_step1_tokens.py for full wallk through.
+    We manually set the environment (to production by default) and then call helper functions to get a token. See ["Step 1 Tokens"](ewx_api_v1_step1_tokens.html) for full wallk through.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    **<span style="color:Red;">DEPRECATION WARNING</span>**
+
+    *Enviroweather authentication and token issuance method is changing this year. Use the following documentation to work with our APIs currenlty but contact us  if you'd like notification of when our token system is updated.*
     """)
     return
 
@@ -165,7 +175,6 @@ def _(
         print("error in response:", graoevine_data["message"])
     else:
         print("model rean successfully")
-
     return (
         extended_timeout_seconds,
         grapevine_response,
@@ -262,7 +271,6 @@ def _(
         print("error in response:", graoevine_data["message"])
     else:
         print("model rean successfully")
-
     return (mv_gvct_model_response,)
 
 
@@ -276,7 +284,6 @@ def _(mv_gvct_model_response):
 def _(gvct_model_response, pd):
     mv_gvct_df = pd.DataFrame(gvct_model_response["data"]["Table"])
     mv_gvct_df
-
     return
 
 
